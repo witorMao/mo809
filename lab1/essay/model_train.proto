@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package modeltrain;
+
+
+message NumpyArray {
+    repeated float num = 1;
+}
+
+message Matrix {
+    repeated NumpyArray arrays = 1;
+}
+
+message FitRequest {
+    Matrix data = 1;
+}
+
+message FitResponse {
+    float accuracy = 1;
+}
+
+message PredictRequest {
+    Matrix data = 1;
+}
+
+message PredictResponse {
+    NumpyArray prediction = 1;
+}
+
+service ModelTrain {
+    rpc train (FitRequest) returns (FitResponse) {}
+    rpc predict (PredictRequest) returns (PredictResponse) {}
+}
