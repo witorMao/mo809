@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package modeltrainrpc;
+
+message sample {
+    repeated float attrs = 1;
+    int32 label = 2;
+}
+
+message FitRequest {
+    repeated sample samples = 1;
+}
+
+message FitResponse {
+    float accuracy = 1;
+}
+
+message PredictRequest {
+    repeated sample samples = 1;
+}
+
+message PredictResponse {
+    repeated int32 pred = 1;
+}
+
+service ModelTrain{
+    rpc Train(FitRequest) returns (FitResponse) {}
+    rpc Predict(PredictRequest) returns (PredictResponse) {}
+}
