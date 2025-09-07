@@ -36,20 +36,6 @@ class ModelTrainGrpcServer(pb2_grpc.ModelTrainServicer):
         preds = self.model_filtered.predict(X_test).tolist()
         return pb2.PredictResponse(pred=preds)
 
-    # def DetectByzantine(self, threshold=2.0):
-    #     stats = [np.mean(X, axis=0) for X, _ in self.client_data]
-    #     global_mean = np.mean(stats, axis=0)
-    #     std_dev = np.std(stats, axis=0)
-
-    #     normal_clients = []
-    #     for idx, (X, y) in enumerate(self.client_data):
-    #         z_score = np.abs(stats[idx] - global_mean) / (std_dev + 1e-8)
-    #         if np.all(z_score < threshold):
-    #             normal_clients.append((X, y))
-    #         else:
-    #             print(f"[Server] Client {idx} is bizantine")
-    #     return normal_clients
-
     def DetectByzantine(self, threshold=1.8):
         """
         Detects Byzantine clients based on normalized features and labels.
@@ -77,7 +63,6 @@ class ModelTrainGrpcServer(pb2_grpc.ModelTrainServicer):
                 normal_clients.append((X, y))
 
         return normal_clients
-
 
     def TrainModels(self):
         # Treino sem filtragem
